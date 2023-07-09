@@ -1,6 +1,8 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:twitch_clone/resources/auth_methods.dart';
+import 'package:twitch_clone/screen/home/home_screen.dart';
 import 'package:twitch_clone/widgets/custom_button.dart';
 import 'package:twitch_clone/widgets/custom_textfield.dart';
 
@@ -15,6 +17,19 @@ class LogInScreen extends StatefulWidget {
 class _LogInScreenState extends State<LogInScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  AuthMethods authMethods = AuthMethods();
+
+  void signInUser() async {
+    bool res = await authMethods.signInUser(
+      context: context,
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+    if (res) {
+      Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+    }
+  }
 
   @override
   void dispose() {
@@ -49,7 +64,7 @@ class _LogInScreenState extends State<LogInScreen> {
               ),
               CustomTextField(controller: _passwordController),
               SizedBox(height: 20),
-              CustomButton(text: "Log In", onTap: () {}),
+              CustomButton(text: "Log In", onTap: signInUser),
             ],
           ),
         ),
