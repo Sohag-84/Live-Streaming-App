@@ -1,12 +1,16 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:twitch_clone/screen/auth_screen/login_screen.dart';
 import 'package:twitch_clone/screen/onboarding_screen.dart';
 import 'package:twitch_clone/screen/auth_screen/signup_screen.dart';
 import 'package:twitch_clone/utils/colors.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
