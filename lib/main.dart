@@ -3,7 +3,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:twitch_clone/provider/user_provider.dart';
 import 'package:twitch_clone/screen/auth_screen/login_screen.dart';
+import 'package:twitch_clone/screen/home/home_screen.dart';
 import 'package:twitch_clone/screen/onboarding_screen.dart';
 import 'package:twitch_clone/screen/auth_screen/signup_screen.dart';
 import 'package:twitch_clone/utils/colors.dart';
@@ -11,7 +14,14 @@ import 'package:twitch_clone/utils/colors.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -39,6 +49,7 @@ class MyApp extends StatelessWidget {
         OnBoardingScreen.routeName: (context) => OnBoardingScreen(),
         LogInScreen.routeName: (context) => LogInScreen(),
         SignUpScreen.routeName: (context) => SignUpScreen(),
+        HomeScreen.routeName: (context) => HomeScreen(),
       },
       home: const OnBoardingScreen(),
     );

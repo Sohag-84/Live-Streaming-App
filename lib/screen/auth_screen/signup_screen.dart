@@ -1,6 +1,8 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:twitch_clone/resources/auth_methods.dart';
+import 'package:twitch_clone/screen/home/home_screen.dart';
 import 'package:twitch_clone/widgets/custom_button.dart';
 import 'package:twitch_clone/widgets/custom_textfield.dart';
 
@@ -16,6 +18,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  AuthMethods authMethods = AuthMethods();
+
+  void signUpUser() async {
+    bool res = await authMethods.signUpUser(
+      context: context,
+      email: _emailController.text,
+      username: _usernameController.text,
+      password: _passwordController.text,
+    );
+    if (res) {
+      Navigator.pushNamed(context, HomeScreen.routeName);
+    }
+  }
 
   @override
   void dispose() {
@@ -57,7 +73,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               CustomTextField(controller: _passwordController),
               SizedBox(height: 20),
-              CustomButton(text: "Sign Up", onTap: () {}),
+              CustomButton(text: "Sign Up", onTap: signUpUser),
             ],
           ),
         ),
