@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:twitch_clone/screen/auth_screen/login_screen.dart';
 import 'package:twitch_clone/screen/onboarding_screen.dart';
+import 'package:twitch_clone/screen/auth_screen/signup_screen.dart';
 import 'package:twitch_clone/utils/colors.dart';
 
 void main() {
@@ -31,6 +33,8 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         OnBoardingScreen.routeName: (context) => OnBoardingScreen(),
+        LogInScreen.routeName: (context) => LogInScreen(),
+        SignUpScreen.routeName: (context) => SignUpScreen(),
       },
       home: const OnBoardingScreen(),
     );
