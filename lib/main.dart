@@ -68,10 +68,10 @@ class MyApp extends StatelessWidget {
           return value;
         }),
         builder: (context, snapshot) {
-          if(snapshot.connectionState == ConnectionState.waiting){
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return LoadingIndicator();
           }
-          if(snapshot.hasData){
+          if (snapshot.hasData) {
             return HomeScreen();
           }
           return OnBoardingScreen();
