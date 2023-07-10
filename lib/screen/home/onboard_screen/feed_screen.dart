@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -10,6 +12,9 @@ class FeedScreen extends StatefulWidget {
 class _FeedScreenState extends State<FeedScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      alignment: Alignment.center,
+      child: Text("Feed Screen"),
+    );
   }
 }

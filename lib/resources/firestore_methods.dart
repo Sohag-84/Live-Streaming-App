@@ -64,4 +64,41 @@ class FireStoreMethods {
     }
     return channelId;
   }
+
+  Future<void> endLiveStream({required String channelId}) async {
+    try {
+      QuerySnapshot snap = await _firestore
+          .collection('livestream')
+          .doc(channelId)
+          .collection('comments')
+          .get();
+
+      for (int i = 0; i < snap.docs.length; i++) {
+        await _firestore
+            .collection('livestream')
+            .doc(channelId)
+            .collection('comments')
+            .doc(
+              ((snap.docs[i].data()! as dynamic)['commentId']),
+            )
+            .delete();
+      }
+      await _firestore.collection('livestream').doc(channelId).delete();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<void> updateViewCount(
+      {required String id, required bool isIncrease}) async {
+    try {
+      ///if user go from feed screen then increase viewers count value
+      ///if user leave from the live then decrease viewers count value
+      await _firestore.collection("livestream").doc(id).update({
+        'viewers': FieldValue.increment(isIncrease ? 1 : -1),
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 }

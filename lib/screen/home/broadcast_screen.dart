@@ -10,6 +10,9 @@ import 'package:twitch_clone/models/user.dart';
 import 'package:twitch_clone/provider/user_provider.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
+import 'package:twitch_clone/resources/firestore_methods.dart';
+
+import 'home_screen.dart';
 
 class BroadcastScreen extends StatefulWidget {
   final bool isBroadcaster;
@@ -88,16 +91,36 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
     );
   }
 
+  _leaveChannel() async {
+    await _engine.leaveChannel();
+    if ('${Provider.of<UserProvider>(context, listen: false).user.uid}${Provider.of<UserProvider>(context, listen: false).user.username}' ==
+        widget.channelId) {
+      await FireStoreMethods().endLiveStream(
+        channelId: widget.channelId,
+      );
+    } else {
+      await FireStoreMethods()
+          .updateViewCount(id: widget.channelId, isIncrease: false);
+    }
+    Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
-    return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          children: [
-            _renderVideo(user: user),
-          ],
+    return WillPopScope(
+      onWillPop: () async {
+        await _leaveChannel();
+        return Future.value(true);
+      },
+      child: Scaffold(
+        body: Padding(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              _renderVideo(user: user),
+            ],
+          ),
         ),
       ),
     );
