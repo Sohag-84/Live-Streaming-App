@@ -1,9 +1,11 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'dart:typed_data';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:twitch_clone/resources/firestore_methods.dart';
+import 'package:twitch_clone/screen/home/broadcast_screen.dart';
 import 'package:twitch_clone/utils/colors.dart';
 import 'package:twitch_clone/utils/utils.dart';
 import 'package:twitch_clone/widgets/custom_button.dart';
@@ -19,6 +21,19 @@ class GoLiveScreen extends StatefulWidget {
 class _GoLiveScreenState extends State<GoLiveScreen> {
   final _titleController = TextEditingController();
   Uint8List? image;
+
+  goLiveStream() async {
+    String channelId = await FireStoreMethods().startLiveStream(
+      context: context,
+      title: _titleController.text.trim(),
+      image: image,
+    );
+    if (channelId.isNotEmpty) {
+      showSnackBar(
+          context: context, content: "Livestream has started successfully");
+      Navigator.pushNamed(context, BroadcastScreen.routeName);
+    }
+  }
 
   @override
   void dispose() {
@@ -108,7 +123,7 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
               Padding(
                 padding: EdgeInsets.only(bottom: 10),
                 child: CustomButton(
-                  onTap: () {},
+                  onTap: goLiveStream,
                   text: "Go Live!",
                 ),
               ),

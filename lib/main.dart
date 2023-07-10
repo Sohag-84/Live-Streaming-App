@@ -8,6 +8,7 @@ import 'package:twitch_clone/models/user.dart' as model;
 import 'package:twitch_clone/provider/user_provider.dart';
 import 'package:twitch_clone/resources/auth_methods.dart';
 import 'package:twitch_clone/screen/auth_screen/login_screen.dart';
+import 'package:twitch_clone/screen/home/broadcast_screen.dart';
 import 'package:twitch_clone/screen/home/home_screen.dart';
 import 'package:twitch_clone/screen/onboarding_screen.dart';
 import 'package:twitch_clone/screen/auth_screen/signup_screen.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
         LogInScreen.routeName: (context) => LogInScreen(),
         SignUpScreen.routeName: (context) => SignUpScreen(),
         HomeScreen.routeName: (context) => HomeScreen(),
+        BroadcastScreen.routeName: (context) => BroadcastScreen(),
       },
       home: FutureBuilder(
         future: AuthMethods()
