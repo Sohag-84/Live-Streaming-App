@@ -26,11 +26,11 @@ class FireStoreMethods {
       if (title.trim().isNotEmpty && image != null) {
         ///check user already live or not.
         ///user can't multiple live at a time
-        if (!(await _firestore
+        if (!((await _firestore
                 .collection('livestream')
-                .doc(user.user.uid)
+                .doc("${user.user.uid}${user.user.username}")
                 .get())
-            .exists) {
+            .exists)) {
           String thumbnailUrl = await _storageMethods.uploadImageToStorage(
             childName: "livestream-thumbnails",
             file: image,

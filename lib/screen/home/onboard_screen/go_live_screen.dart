@@ -48,7 +48,7 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 18.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,6 +120,7 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
                   ),
                 ],
               ),
+              Spacer(),
               Padding(
                 padding: EdgeInsets.only(bottom: 10),
                 child: CustomButton(
