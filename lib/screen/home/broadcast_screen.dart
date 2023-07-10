@@ -30,6 +30,8 @@ class BroadcastScreen extends StatefulWidget {
 class _BroadcastScreenState extends State<BroadcastScreen> {
   late final RtcEngine _engine;
   List<int> remoteUid = [];
+  bool switchCamera = true;
+  bool isMuted = false;
 
   @override
   void initState() {
@@ -91,6 +93,23 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
     );
   }
 
+  void _switchCamera() {
+    _engine.switchCamera().then((value) {
+      setState(() {
+        switchCamera = !switchCamera;
+      });
+    }).catchError((err) {
+      debugPrint("Switch camera $err");
+    });
+  }
+
+  void onToggleMute() async {
+    setState(() {
+      isMuted = !isMuted;
+    });
+    await _engine.muteLocalAudioStream(isMuted);
+  }
+
   _leaveChannel() async {
     await _engine.leaveChannel();
     if ('${Provider.of<UserProvider>(context, listen: false).user.uid}${Provider.of<UserProvider>(context, listen: false).user.username}' ==
@@ -119,6 +138,19 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
           child: Column(
             children: [
               _renderVideo(user: user),
+              if ("${user.uid}${user.username}" == widget.channelId)
+                Column(
+                  children: [
+                    InkWell(
+                      onTap: _switchCamera,
+                      child: Text("Switch Camera"),
+                    ),
+                    InkWell(
+                      onTap: onToggleMute,
+                      child: Text(isMuted ? "Unmute" : "Mute"),
+                    ),
+                  ],
+                ),
             ],
           ),
         ),
