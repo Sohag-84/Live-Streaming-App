@@ -31,7 +31,15 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
     if (channelId.isNotEmpty) {
       showSnackBar(
           context: context, content: "Livestream has started successfully");
-      Navigator.pushNamed(context, BroadcastScreen.routeName);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => BroadcastScreen(
+            isBroadcaster: true,
+            channelId: channelId,
+          ),
+        ),
+      );
     }
   }
 
@@ -48,7 +56,6 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 18.0),
           child: Column(
-            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

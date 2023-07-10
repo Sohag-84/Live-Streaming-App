@@ -19,7 +19,7 @@ dependencies:
   provider: ^6.0.5
   dotted_border: ^2.0.0+3
   file_picker: ^5.3.2
-  agora_rtc_engine: ^6.2.1
+  agora_rtc_engine: ^5.0.1
   permission_handler: ^10.4.2
 
 dev_dependencies:
