@@ -1,6 +1,6 @@
 # twitch_clone
 
-Build an INSANE Twitch Clone | Flutter Live Streaming App with Backend | Agora
+Flutter Live Streaming App with Backend | Agora
 
 ## Getting Started
 
