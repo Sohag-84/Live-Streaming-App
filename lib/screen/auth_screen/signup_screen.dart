@@ -5,6 +5,7 @@ import 'package:twitch_clone/resources/auth_methods.dart';
 import 'package:twitch_clone/screen/home/home_screen.dart';
 import 'package:twitch_clone/widgets/custom_button.dart';
 import 'package:twitch_clone/widgets/custom_textfield.dart';
+import 'package:twitch_clone/widgets/loading_indicator.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const String routeName = "/signup";
@@ -21,13 +22,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   AuthMethods authMethods = AuthMethods();
 
+  bool _isLoading = false;
+
   void signUpUser() async {
+    setState(() {
+      _isLoading = true;
+    });
     bool res = await authMethods.signUpUser(
       context: context,
       email: _emailController.text,
       username: _usernameController.text,
       password: _passwordController.text,
     );
+    setState(() {
+      _isLoading = false;
+    });
     if (res) {
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
     }
@@ -73,7 +82,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               CustomTextField(controller: _passwordController),
               SizedBox(height: 20),
-              CustomButton(text: "Sign Up", onTap: signUpUser),
+              _isLoading
+                  ? LoadingIndicator()
+                  : CustomButton(text: "Sign Up", onTap: signUpUser),
             ],
           ),
         ),

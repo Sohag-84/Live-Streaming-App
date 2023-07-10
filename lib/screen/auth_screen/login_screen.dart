@@ -5,6 +5,7 @@ import 'package:twitch_clone/resources/auth_methods.dart';
 import 'package:twitch_clone/screen/home/home_screen.dart';
 import 'package:twitch_clone/widgets/custom_button.dart';
 import 'package:twitch_clone/widgets/custom_textfield.dart';
+import 'package:twitch_clone/widgets/loading_indicator.dart';
 
 class LogInScreen extends StatefulWidget {
   static const String routeName = "/login";
@@ -20,12 +21,20 @@ class _LogInScreenState extends State<LogInScreen> {
 
   AuthMethods authMethods = AuthMethods();
 
+  bool _isLoading = false;
+
   void signInUser() async {
+    setState(() {
+      _isLoading = true;
+    });
     bool res = await authMethods.signInUser(
       context: context,
       email: _emailController.text,
       password: _passwordController.text,
     );
+    setState(() {
+      _isLoading = false;
+    });
     if (res) {
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
     }
@@ -64,7 +73,9 @@ class _LogInScreenState extends State<LogInScreen> {
               ),
               CustomTextField(controller: _passwordController),
               SizedBox(height: 20),
-              CustomButton(text: "Log In", onTap: signInUser),
+              _isLoading
+                  ? LoadingIndicator()
+                  : CustomButton(text: "Log In", onTap: signInUser),
             ],
           ),
         ),
