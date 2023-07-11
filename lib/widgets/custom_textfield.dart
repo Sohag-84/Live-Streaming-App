@@ -5,7 +5,8 @@ import 'package:twitch_clone/utils/colors.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
-  const CustomTextField({super.key, required this.controller});
+  final Function(String)? onTap;
+  const CustomTextField({super.key, required this.controller, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +14,7 @@ class CustomTextField extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 8),
       child: TextField(
         controller: controller,
+        onSubmitted: onTap,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),

@@ -21,6 +21,7 @@ dependencies:
   file_picker: ^5.3.2
   agora_rtc_engine: ^5.0.1
   permission_handler: ^10.4.2
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_test:

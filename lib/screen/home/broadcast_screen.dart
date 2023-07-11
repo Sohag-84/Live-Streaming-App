@@ -11,6 +11,7 @@ import 'package:twitch_clone/provider/user_provider.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:twitch_clone/resources/firestore_methods.dart';
+import 'package:twitch_clone/widgets/chat.dart';
 
 import 'home_screen.dart';
 
@@ -151,6 +152,9 @@ class _BroadcastScreenState extends State<BroadcastScreen> {
                     ),
                   ],
                 ),
+              Expanded(
+                child: Chat(channelId: widget.channelId),
+              ),
             ],
           ),
         ),
